@@ -1,0 +1,2 @@
+Script to check certs expirations dates. This script shows a warning messages if an SSL cert uses sha1 as the
+data integrity algorithm for an SSL cert.
