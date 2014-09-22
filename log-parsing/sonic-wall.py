@@ -7,13 +7,17 @@ class SonicWallLogParser(object):
         pass
 
     def _create_json_entry(self, fields_data):
+        source = re.split(r',', fields_data[4])
+        destination = re.split(',', fields_data[5])
         json_entry = {
-            'date' :  fields_data[0],
+            '@timestamp' :  fields_data[0],
             'type' :  fields_data[1],
             'action' : fields_data[2],
             'message' : fields_data[3],
-            'source' : fields_data[4],
-            'destination' : fields_data[5],
+            'source-ip' : source[0],
+            'source-port' : source[1],
+            'destination-ip' : destination[0],
+            'destination-port' : destination[1],
             'info' : fields_data[6]
         }
         data = json.dumps(json_entry)
