@@ -7,8 +7,11 @@ class SonicWallLogParser(object):
         pass
 
     def _create_json_entry(self, fields_data):
-        source = re.split(r',', fields_data[4])
-        destination = re.split(',', fields_data[5])
+        #redundant code
+        if len(fields_data[4]) > 2:
+            source = re.split(r',', fields_data[4])
+        if len(fields_data[5]) > 2:
+            destination = re.split(',', fields_data[5])
         json_entry = {
             '@timestamp' :  fields_data[0],
             'type' :  fields_data[1],
@@ -26,9 +29,11 @@ class SonicWallLogParser(object):
     def parse(self, line):
         fields = re.split(r'-\s*', line)
         if len(fields) == 7:
-            json_data = self._create_json_entry(fields)
-            print json_data
-        # print len(fields) 
+            source = re.split(r',', fields[4])
+            destination = re.split(',', fields[5])
+            if len(source) > 2 and len(destination) > 2:
+                json_data = self._create_json_entry(fields)
+                print json_data
         
     def process_file(self, filename):
         with open(filename, 'r') as f:
@@ -41,6 +46,6 @@ class SonicWallLogParser(object):
             
 if __name__ == '__main__':
     parser = SonicWallLogParser()
-    filename = '/home/punisher/Documents/NacoLabs/client-logs/Aug-24-2014-1.txt'
+    filename = '/home/punisher/Documents/NacoLabs/client-logs/gerri-logs/home-router-traffic.txt'
     parser.process_file(filename)
     
