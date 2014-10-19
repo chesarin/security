@@ -1,20 +1,29 @@
 #!/usr/bin/env python
 import re
 import json
+from datetime import datetime,tzinfo,timedelta
+
+class TZ(tzinfo):
+    def utcoffset(self, dt): 
+        return timedelta(minutes=-399)
 
 class SonicWallLogParser(object):
     def __init__(self):
         pass
-
+    def fix_date(self, tdate):
+        mydate = re.split(r'[-:.\s]\s*', tdate)
+        mdate = datetime(int(mydate[2]),int(mydate[0]), int(mydate[1]), int(mydate[3]), int(mydate[4]), int(mydate[5]), int(mydate[6]), tzinfo=TZ()).isoformat()
+        return mdate
     def _create_json_entry(self, fields_data):
         timestamp = fields_data[0].replace('/','-')
+        mdate = self.fix_date(timestamp)
         #redundant code
         if len(fields_data[4]) > 2:
             source = re.split(r',', fields_data[4])
         if len(fields_data[5]) > 2:
             destination = re.split(',', fields_data[5])
         json_entry = {
-            '@timestamp' :  timestamp,
+            '@timestamp' :  mdate,
             'type' :  fields_data[1],
             'action' : fields_data[2],
             'message' : fields_data[3],
