@@ -12,7 +12,9 @@ class SonicWallLogParser(object):
         pass
     def fix_date(self, tdate):
         mydate = re.split(r'[-:.\s]\s*', tdate)
-        mdate = datetime(int(mydate[2]),int(mydate[0]), int(mydate[1]), int(mydate[3]), int(mydate[4]), int(mydate[5]), int(mydate[6]), tzinfo=TZ()).isoformat()
+        print mydate
+        mdate = datetime(int(mydate[2]),int(mydate[0]), int(mydate[1]), int(mydate[3]), int(mydate[4]), int(mydate[5]), int(mydate[6])).isoformat()
+        print mdate
         return mdate
     def _create_json_entry(self, fields_data):
         timestamp = fields_data[0].replace('/','-')
@@ -56,7 +58,7 @@ class SonicWallLogParser(object):
             
 if __name__ == '__main__':
     parser = SonicWallLogParser()
-    # filename = '/home/punisher/Documents/NacoLabs/client-logs/gerri-logs/home-router-traffic.txt'
-    filename = 'tz205.txt'
+    # filename = '/home/punisher/Documents/NacoLabs/client-logs/retake-gerri-logs/tz205-august-sep-2014.txt'
+    filename = '/tmp/tz205.txt'
     parser.process_file(filename)
     
