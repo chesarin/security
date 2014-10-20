@@ -12,9 +12,9 @@ class SonicWallLogParser(object):
         pass
     def fix_date(self, tdate):
         mydate = re.split(r'[-:.\s]\s*', tdate)
-        print mydate
+        # print mydate
         mdate = datetime(int(mydate[2]),int(mydate[0]), int(mydate[1]), int(mydate[3]), int(mydate[4]), int(mydate[5]), int(mydate[6])).isoformat()
-        print mdate
+        # print mdate
         return mdate
     def _create_json_entry(self, fields_data):
         timestamp = fields_data[0].replace('/','-')
