@@ -1,2 +1,7 @@
-Script to check certs expirations dates. This script shows a warning messages if an SSL cert uses sha1 as the
+This script shows a warning messages if an SSL cert uses sha1 as the
 data integrity algorithm for an SSL cert.
+
+The only external module needed is M2Crypto. It can be installed
+as follows:
+
+pip install M2Crypto 
