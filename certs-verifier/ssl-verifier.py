@@ -33,9 +33,9 @@ class ShaChecker(object):
 
     def result(self, site):
         if self.is_sha256_present(site):
-            print "{} non-vulnerable".format(site)
+            print "{0:<30} non-vulnerable".format(site)
         else:
-            print "{} vulnerable".format(site)
+            print "{0:<30} vulnerable".format(site)
 
 
 class ProcessFile(object):
